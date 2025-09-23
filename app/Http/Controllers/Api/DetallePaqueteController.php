@@ -20,23 +20,23 @@ class DetallePaqueteController extends Controller
     public function store(StoreDetallePaqueteRequest $request)
     {
         $detalle = DetallePaquete::create($request->validated());
-        return new DetallePaqueteResource($detalle);
+        return new DetallePaqueteResource($detalle->load(['paquete', 'tipoMercancia']));
     }
 
-    public function show(DetallePaquete $detallePaquete)
+    public function show(DetallePaquete $detalle_paquete)
     {
-        return new DetallePaqueteResource($detallePaquete->load(['paquete', 'tipoMercancia']));
+        return new DetallePaqueteResource($detalle_paquete->load(['paquete', 'tipoMercancia']));
     }
 
-    public function update(UpdateDetallePaqueteRequest $request, DetallePaquete $detallePaquete)
+    public function update(UpdateDetallePaqueteRequest $request, DetallePaquete $detalle_paquete)
     {
-        $detallePaquete->update($request->validated());
-        return new DetallePaqueteResource($detallePaquete);
+        $detalle_paquete->update($request->validated());
+        return new DetallePaqueteResource($detalle_paquete->load(['paquete', 'tipoMercancia']));
     }
 
-    public function destroy(DetallePaquete $detallePaquete)
+    public function destroy(DetallePaquete $detalle_paquete)
     {
-        $detallePaquete->delete();
-        return response()->json(['message' => 'Detalle eliminado'], 200);
+        $detalle_paquete->delete();
+        return response()->json(['message' => 'Detalle de paquete eliminado'], 200);
     }
 }

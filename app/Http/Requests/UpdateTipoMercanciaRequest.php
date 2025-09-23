@@ -13,10 +13,10 @@ class UpdateTipoMercanciaRequest extends FormRequest
 
     public function rules(): array
     {
-        $tipoId = $this->route('tipo_mercancia')->id ?? null;
+        $id = $this->route('tipo_mercancia')->id ?? null;
 
         return [
-            'tipo' => 'required|string|max:45|unique:tipo_mercancia,tipo,' . $tipoId,
+            'tipo' => 'required|string|max:45|unique:tipo_mercancia,tipo,' . $id
         ];
     }
 }

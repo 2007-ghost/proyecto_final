@@ -27,6 +27,7 @@ class CamioneroController extends Controller
         return new CamioneroResource($camionero);
     }
 
+
     // Mostrar un camionero
     public function show(Camionero $camionero)
     {

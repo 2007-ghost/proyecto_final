@@ -23,20 +23,20 @@ class TipoMercanciaController extends Controller
         return new TipoMercanciaResource($tipo);
     }
 
-    public function show(TipoMercancia $tipoMercancia)
+    public function show(TipoMercancia $tipo_mercancia)
     {
-        return new TipoMercanciaResource($tipoMercancia);
+        return new TipoMercanciaResource($tipo_mercancia);
     }
 
-    public function update(UpdateTipoMercanciaRequest $request, TipoMercancia $tipoMercancia)
+    public function update(UpdateTipoMercanciaRequest $request, TipoMercancia $tipo_mercancia)
     {
-        $tipoMercancia->update($request->validated());
-        return new TipoMercanciaResource($tipoMercancia);
+        $tipo_mercancia->update($request->validated());
+        return new TipoMercanciaResource($tipo_mercancia);
     }
 
-    public function destroy(TipoMercancia $tipoMercancia)
+    public function destroy(TipoMercancia $tipo_mercancia)
     {
-        $tipoMercancia->delete();
+        $tipo_mercancia->delete();
         return response()->json(['message' => 'Tipo eliminado'], 200);
     }
 }

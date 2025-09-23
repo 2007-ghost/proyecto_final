@@ -9,6 +9,9 @@ class DetallePaquete extends Model
 {
     use HasFactory;
 
+    // 👇 Muy importante: tu tabla es plural
+    protected $table = 'detalles_paquetes';
+
     protected $fillable = [
         'paquete_id',
         'tipo_mercancia_id',
@@ -17,6 +20,7 @@ class DetallePaquete extends Model
         'fecha_entrega'
     ];
 
+    // Relaciones
     public function paquete()
     {
         return $this->belongsTo(Paquete::class);

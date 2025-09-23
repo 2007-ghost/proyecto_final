@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateCamioneroRequest extends FormRequest
 {
@@ -13,10 +14,15 @@ class UpdateCamioneroRequest extends FormRequest
 
     public function rules(): array
     {
-        $camioneroId = $this->route('camionero')->id ?? null;
+        $camioneroId = $this->route('camionero')->id ?? $this->route('camionero');
 
         return [
-            'documento' => 'required|string|max:10|unique:camioneros,documento,' . $camioneroId,
+            'documento' => [
+                'required',
+                'string',
+                'max:10',
+                Rule::unique('camioneros', 'documento')->ignore($camioneroId),
+            ],
             'nombre' => 'required|string|max:45',
             'apellido' => 'required|string|max:45',
             'fecha_nacimiento' => 'required|date',

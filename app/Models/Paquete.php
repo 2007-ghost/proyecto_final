@@ -9,6 +9,9 @@ class Paquete extends Model
 {
     use HasFactory;
 
+    // 👇 Muy importante si tu tabla es singular o diferente
+    protected $table = 'paquetes';
+
     protected $fillable = [
         'camionero_id',
         'estado_id',
@@ -17,7 +20,7 @@ class Paquete extends Model
 
     public function camionero()
     {
-        return $this->belongsTo(Camionero::class);
+        return $this->belongsTo(Camionero::class, 'camionero_id');
     }
 
     public function estado()
@@ -27,6 +30,6 @@ class Paquete extends Model
 
     public function detalles()
     {
-        return $this->hasMany(DetallePaquete::class);
+        return $this->hasMany(DetallePaquete::class, 'paquete_id');
     }
 }

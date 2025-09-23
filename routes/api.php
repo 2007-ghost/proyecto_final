@@ -1,9 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
-// Controladores API
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CamioneroController;
 use App\Http\Controllers\Api\CamionController;
 use App\Http\Controllers\Api\PaqueteController;
@@ -11,17 +9,18 @@ use App\Http\Controllers\Api\DetallePaqueteController;
 use App\Http\Controllers\Api\EstadoPaqueteController;
 use App\Http\Controllers\Api\TipoMercanciaController;
 
-// Rutas abiertas de prueba (sin autenticar)
-Route::apiResource('camioneros', CamioneroController::class);
-Route::apiResource('camiones', CamionController::class);
-Route::apiResource('paquetes', PaqueteController::class);
-Route::apiResource('detalles-paquetes', DetallePaqueteController::class);
-Route::apiResource('estados-paquetes', EstadoPaqueteController::class);
-Route::apiResource('tipos-mercancia', TipoMercanciaController::class);
+// 👤 Rutas públicas (sin token)
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
 
-// Rutas de prueba de usuario autenticado (Sanctum)
+// 🔒 Rutas protegidas (requieren token)
 Route::middleware('auth:sanctum')->group(function () {
-    // Aquí podrías duplicar las rutas apiResource para protegerlas
-    // Ejemplo:
-    // Route::apiResource('camioneros', CamioneroController::class);
+    Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::apiResource('camioneros', CamioneroController::class);
+    Route::apiResource('camiones', CamionController::class)->parameters(['camiones' => 'camion']);
+    Route::apiResource('paquetes', PaqueteController::class)->parameters(['paquetes' => 'paquete']);
+    Route::apiResource('detalles-paquetes', DetallePaqueteController::class)->parameters(['detalles-paquetes' => 'detalle_paquete']);
+    Route::apiResource('estados-paquetes', EstadoPaqueteController::class);
+    Route::apiResource('tipos-mercancia', TipoMercanciaController::class)->parameters(['tipos-mercancia' => 'tipo_mercancia']);
 });

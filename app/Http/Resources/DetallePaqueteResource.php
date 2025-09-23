@@ -12,12 +12,16 @@ class DetallePaqueteResource extends JsonResource
         return [
             'id' => $this->id,
             'paquete_id' => $this->paquete_id,
-            'tipo_mercancia' => $this->tipoMercancia->tipo ?? null,
+            'tipo_mercancia_id' => $this->tipo_mercancia_id,
             'dimension' => $this->dimension,
             'peso' => $this->peso,
             'fecha_entrega' => $this->fecha_entrega,
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
+            'updated_at' => $this->updated_at,
+
+            // Relaciones opcionales
+            'paquete' => $this->whenLoaded('paquete'),
+            'tipo_mercancia' => $this->whenLoaded('tipoMercancia'),
         ];
     }
 }

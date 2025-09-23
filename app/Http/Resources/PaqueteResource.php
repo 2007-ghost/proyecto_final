@@ -11,20 +11,18 @@ class PaqueteResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'camionero' => new CamioneroResource($this->whenLoaded('camionero')),
-            'estado' => $this->estado,
             'direccion' => $this->direccion,
-            'detalles' => $this->detallesPaquetes->map(function($detalle) {
-                return [
-                    'id' => $detalle->id,
-                    'tipo_mercancia' => $detalle->tipoMercancia->tipo ?? null,
-                    'dimension' => $detalle->dimension,
-                    'peso' => $detalle->peso,
-                    'fecha_entrega' => $detalle->fecha_entrega
-                ];
-            }),
+            'camionero' => $this->camionero ? [
+                'id' => $this->camionero->id,
+                'nombre' => $this->camionero->nombre,
+                'apellido' => $this->camionero->apellido
+            ] : null,
+            'estado' => $this->estado ? [
+                'id' => $this->estado->id,
+                'estado' => $this->estado->estado
+            ] : null,
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
+            'updated_at' => $this->updated_at,
         ];
     }
 }

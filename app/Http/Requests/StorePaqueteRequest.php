@@ -16,7 +16,7 @@ class StorePaqueteRequest extends FormRequest
         return [
             'camionero_id' => 'required|exists:camioneros,id',
             'estado_id' => 'required|exists:estados_paquetes,id',
-            'direccion' => 'required|string|max:25',
+            'direccion' => 'required|string|max:100',
         ];
     }
 }

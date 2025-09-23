@@ -9,11 +9,10 @@ class EstadoPaquete extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['estado'];
+    // 👇 Muy importante porque tu tabla es plural
+    protected $table = 'estados_paquetes';
 
-    public function paquetes()
-    {
-        return $this->hasMany(Paquete::class, 'estado_id');
-    }
+    protected $fillable = [
+        'estado'
+    ];
 }
-

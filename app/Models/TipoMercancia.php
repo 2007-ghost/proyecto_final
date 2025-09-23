@@ -9,10 +9,10 @@ class TipoMercancia extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['tipo'];
+    // Nombre exacto de la tabla en la BD
+    protected $table = 'tipo_mercancia';
 
-    public function detallesPaquetes()
-    {
-        return $this->hasMany(DetallePaquete::class, 'tipo_mercancia_id');
-    }
+    protected $fillable = [
+        'tipo'
+    ];
 }

@@ -14,7 +14,7 @@ class StoreTipoMercanciaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tipo' => 'required|string|max:45|unique:tipo_mercancia,tipo',
+            'tipo' => 'required|string|max:45|unique:tipo_mercancia,tipo'
         ];
     }
 }

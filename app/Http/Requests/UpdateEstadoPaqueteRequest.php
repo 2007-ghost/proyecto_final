@@ -13,10 +13,8 @@ class UpdateEstadoPaqueteRequest extends FormRequest
 
     public function rules(): array
     {
-        $estadoId = $this->route('estado_paquete')->id ?? null;
-
         return [
-            'estado' => 'required|string|max:45|unique:estados_paquetes,estado,' . $estadoId,
+            'estado' => 'required|string|max:45'
         ];
     }
 }

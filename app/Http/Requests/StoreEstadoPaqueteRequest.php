@@ -14,7 +14,7 @@ class StoreEstadoPaqueteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'estado' => 'required|string|max:45|unique:estados_paquetes,estado',
+            'estado' => 'required|string|max:45'
         ];
     }
 }

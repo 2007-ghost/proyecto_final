@@ -13,10 +13,12 @@ class UpdatePaqueteRequest extends FormRequest
 
     public function rules(): array
     {
+        $id = $this->route('paquete')->id ?? null;
+
         return [
             'camionero_id' => 'required|exists:camioneros,id',
             'estado_id' => 'required|exists:estados_paquetes,id',
-            'direccion' => 'required|string|max:25',
+            'direccion' => 'required|string|max:100',
         ];
     }
 }
