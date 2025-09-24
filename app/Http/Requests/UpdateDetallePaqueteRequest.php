@@ -12,13 +12,13 @@ class UpdateDetallePaqueteRequest extends FormRequest
     }
 
     public function rules(): array
-    {
-        return [
-            'paquete_id' => 'required|exists:paquetes,id',
-            'tipo_mercancia_id' => 'required|exists:tipo_mercancia,id',
-            'dimension' => 'required|string|max:45',
-            'peso' => 'required|string|max:45',
-            'fecha_entrega' => 'required|date',
-        ];
-    }
+{
+    return [
+        'paquete_id' => 'required|exists:paquetes,id',
+        'tipo_mercancia_id' => 'required|exists:tipo_mercancia,id',
+        'dimension' => 'required|numeric',
+        'peso' => 'required|numeric',
+        'fecha_entrega' => 'required|date',
+    ];
+}
 }

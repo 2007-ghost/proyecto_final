@@ -11,6 +11,8 @@ class PaqueteResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'camionero_id' => $this->camionero_id,
+            'estado_id' => $this->estado_id,
             'direccion' => $this->direccion,
             'camionero' => $this->camionero ? [
                 'id' => $this->camionero->id,

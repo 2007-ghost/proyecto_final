@@ -61,11 +61,25 @@ class AuthController extends Controller
 
     // Logout
     public function logout(Request $request)
-    {
-        $request->user()->tokens()->delete();
-
+{
+    if (! $request->user()) {
         return response()->json([
-            'message' => 'Sesión cerrada correctamente'
+            'message' => 'Usuario no autenticado'
+        ], 401);
+    }
+
+    $request->user()->tokens()->delete();
+
+    return response()->json([
+        'message' => 'Sesión cerrada correctamente'
+    ]);
+}
+
+    // Perfil del usuario autenticado
+    public function me(Request $request)
+    {
+        return response()->json([
+            'user' => $request->user()
         ]);
     }
 }

@@ -32,4 +32,19 @@ class Paquete extends Model
     {
         return $this->hasMany(DetallePaquete::class, 'paquete_id');
     }
+    /**
+ * @OA\Schema(
+ *     schema="Paquete",
+ *     type="object",
+ *     title="Paquete",
+ *     required={"camionero_id","estado_id","direccion"},
+ *     @OA\Property(property="id", type="integer", example=1),
+ *     @OA\Property(property="camionero_id", type="integer", example=1),
+ *     @OA\Property(property="estado_id", type="integer", example=1),
+ *     @OA\Property(property="direccion", type="string", example="Calle 123"),
+ *     @OA\Property(property="created_at", type="string", format="date-time"),
+ *     @OA\Property(property="updated_at", type="string", format="date-time")
+ * )
+ */
+
 }

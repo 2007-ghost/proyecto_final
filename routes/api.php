@@ -16,7 +16,7 @@ Route::post('/login', [AuthController::class, 'login']);
 // 🔒 Rutas protegidas (requieren token)
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
-
+    Route::get('/me', [AuthController::class, 'me']);
     Route::apiResource('camioneros', CamioneroController::class);
     Route::apiResource('camiones', CamionController::class)->parameters(['camiones' => 'camion']);
     Route::apiResource('paquetes', PaqueteController::class)->parameters(['paquetes' => 'paquete']);
