@@ -1,0 +1,1950 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Transporte API",
+        "description": "Documentación generada con Swagger para la API de transporte",
+        "contact": {
+            "email": "soporte@transporte.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "Servidor Local"
+        },
+        {
+            "url": "https://tu-dominio.com",
+            "description": "Servidor Producción"
+        }
+    ],
+    "paths": {
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Registrar un nuevo usuario",
+                "operationId": "8e4e3cb7b46126f4696379d3c7eeb4ad",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Juan Pérez"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "juan@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "12345678"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuario registrado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "1|xyz123token"
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "Bearer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Iniciar sesión de usuario",
+                "operationId": "222b2625838e3c57e017987f73598fda",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "juan@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "12345678"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login exitoso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "1|xyz123token"
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "Bearer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciales inválidas"
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Cerrar sesión del usuario autenticado",
+                "operationId": "ad65cbbd4e9f201619eae184a5961a98",
+                "responses": {
+                    "200": {
+                        "description": "Sesión cerrada correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sesión cerrada correctamente"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Usuario no autenticado"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/me": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Obtener el perfil del usuario autenticado",
+                "operationId": "8367feff40ba10e43187792cad3132c1",
+                "responses": {
+                    "200": {
+                        "description": "Perfil del usuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Usuario no autenticado"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/camiones": {
+            "get": {
+                "tags": [
+                    "Camiones"
+                ],
+                "summary": "Listar camiones",
+                "operationId": "73f14811afe9c701c13481e70ed0eeea",
+                "responses": {
+                    "200": {
+                        "description": "Lista de camiones",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Camion"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Camiones"
+                ],
+                "summary": "Crear un nuevo camión",
+                "operationId": "187f9820c013bc78fb0664f1382fcaf1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "placa",
+                                    "marca",
+                                    "modelo",
+                                    "capacidad"
+                                ],
+                                "properties": {
+                                    "placa": {
+                                        "type": "string",
+                                        "example": "ABC123"
+                                    },
+                                    "marca": {
+                                        "type": "string",
+                                        "example": "Volvo"
+                                    },
+                                    "modelo": {
+                                        "type": "string",
+                                        "example": "FH16"
+                                    },
+                                    "capacidad": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 15000
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Camión creado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Camion"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/camiones/{id}": {
+            "get": {
+                "tags": [
+                    "Camiones"
+                ],
+                "summary": "Mostrar un camión específico",
+                "operationId": "abd1d5be8d0a1c83142b580f84ac5238",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del camión",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles del camión",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Camion"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Camiones"
+                ],
+                "summary": "Actualizar un camión",
+                "operationId": "0a2740d33d83659a12afd2d3f003264a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del camión",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "placa": {
+                                        "type": "string",
+                                        "example": "DEF456"
+                                    },
+                                    "marca": {
+                                        "type": "string",
+                                        "example": "Mercedes"
+                                    },
+                                    "modelo": {
+                                        "type": "string",
+                                        "example": "Actros"
+                                    },
+                                    "capacidad": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 20000
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Camión actualizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Camion"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Camiones"
+                ],
+                "summary": "Eliminar un camión",
+                "operationId": "dd10a49816bafccace92731c83b2a8fa",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del camión",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Camión eliminado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Camión eliminado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/camioneros": {
+            "get": {
+                "tags": [
+                    "Camioneros"
+                ],
+                "summary": "Listar camioneros",
+                "description": "Obtiene un listado paginado de todos los camioneros junto con sus camiones y paquetes.",
+                "operationId": "015139d022ae22eb9a00817b8c379859",
+                "responses": {
+                    "200": {
+                        "description": "Lista de camioneros",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Camionero"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Camioneros"
+                ],
+                "summary": "Crear un nuevo camionero",
+                "operationId": "bd604b782d923e543b032865045869be",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "documento",
+                                    "nombre",
+                                    "apellido",
+                                    "fecha_nacimiento",
+                                    "licencia",
+                                    "telefono"
+                                ],
+                                "properties": {
+                                    "documento": {
+                                        "type": "string",
+                                        "example": "123456789"
+                                    },
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Juan"
+                                    },
+                                    "apellido": {
+                                        "type": "string",
+                                        "example": "Pérez"
+                                    },
+                                    "fecha_nacimiento": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1985-06-15"
+                                    },
+                                    "licencia": {
+                                        "type": "string",
+                                        "example": "C1"
+                                    },
+                                    "telefono": {
+                                        "type": "string",
+                                        "example": "3201234567"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Camionero creado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Camionero"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/camioneros/{id}": {
+            "get": {
+                "tags": [
+                    "Camioneros"
+                ],
+                "summary": "Mostrar un camionero",
+                "description": "Devuelve los datos de un camionero específico, incluyendo los camiones asociados.",
+                "operationId": "2bfc8c1b9f0ca8d24b20d983bf38bc7c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del camionero",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles del camionero",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Camionero"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Camioneros"
+                ],
+                "summary": "Actualizar un camionero",
+                "operationId": "290516260c19bb66be553e7619556d11",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del camionero",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "documento": {
+                                        "type": "string",
+                                        "example": "987654321"
+                                    },
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Carlos"
+                                    },
+                                    "apellido": {
+                                        "type": "string",
+                                        "example": "García"
+                                    },
+                                    "fecha_nacimiento": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1990-04-20"
+                                    },
+                                    "licencia": {
+                                        "type": "string",
+                                        "example": "C2"
+                                    },
+                                    "telefono": {
+                                        "type": "string",
+                                        "example": "3109876543"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Camionero actualizado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Camionero"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Camioneros"
+                ],
+                "summary": "Eliminar un camionero",
+                "operationId": "e463b266bcbcf69b1656e6456ea24efb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del camionero",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Camionero eliminado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Camionero eliminado correctamente"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/detalles-paquetes": {
+            "get": {
+                "tags": [
+                    "Detalles de Paquetes"
+                ],
+                "summary": "Listar detalles de paquetes",
+                "description": "Obtiene un listado paginado de todos los detalles de paquetes junto con su paquete y tipo de mercancía.",
+                "operationId": "b07f52da1ebda2442d0e242a50a042da",
+                "responses": {
+                    "200": {
+                        "description": "Lista de detalles de paquetes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/DetallePaquete"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Detalles de Paquetes"
+                ],
+                "summary": "Crear un nuevo detalle de paquete",
+                "operationId": "690a7893b3c1888584afcc669c13c167",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "paquete_id",
+                                    "tipo_mercancia_id",
+                                    "dimension",
+                                    "peso",
+                                    "fecha_entrega"
+                                ],
+                                "properties": {
+                                    "paquete_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "tipo_mercancia_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "dimension": {
+                                        "type": "string",
+                                        "example": "50x40x30 cm"
+                                    },
+                                    "peso": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 25.5
+                                    },
+                                    "fecha_entrega": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-10-15"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Detalle de paquete creado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DetallePaquete"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/detalles-paquetes/{id}": {
+            "get": {
+                "tags": [
+                    "Detalles de Paquetes"
+                ],
+                "summary": "Mostrar un detalle de paquete",
+                "description": "Devuelve la información de un detalle de paquete específico junto con su paquete y tipo de mercancía.",
+                "operationId": "7888d7b42d0ddb3c33c6655fc8be8b02",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del detalle de paquete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalle de paquete encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DetallePaquete"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Detalles de Paquetes"
+                ],
+                "summary": "Actualizar un detalle de paquete",
+                "operationId": "167e9bae16d51dbbe186e290c25596cc",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del detalle de paquete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "paquete_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "tipo_mercancia_id": {
+                                        "type": "integer",
+                                        "example": 3
+                                    },
+                                    "dimension": {
+                                        "type": "string",
+                                        "example": "60x45x35 cm"
+                                    },
+                                    "peso": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 30.2
+                                    },
+                                    "fecha_entrega": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-11-01"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Detalle de paquete actualizado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DetallePaquete"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Detalles de Paquetes"
+                ],
+                "summary": "Eliminar un detalle de paquete",
+                "operationId": "5ab4dc10dcc959ebd27a3c5c8c8d84d1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del detalle de paquete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalle de paquete eliminado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Detalle de paquete eliminado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/estados-paquetes": {
+            "get": {
+                "tags": [
+                    "Estados de Paquetes"
+                ],
+                "summary": "Listar estados de paquetes",
+                "description": "Obtiene un listado paginado de todos los estados de los paquetes.",
+                "operationId": "c494546589d010d254eb4dca2e229ce9",
+                "responses": {
+                    "200": {
+                        "description": "Lista de estados de paquetes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/EstadoPaquete"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Estados de Paquetes"
+                ],
+                "summary": "Crear un nuevo estado de paquete",
+                "operationId": "316b979429410a9f82bcdc3b3daf8cab",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "estado"
+                                ],
+                                "properties": {
+                                    "estado": {
+                                        "type": "string",
+                                        "example": "En tránsito"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Estado de paquete creado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EstadoPaquete"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/estados-paquetes/{id}": {
+            "get": {
+                "tags": [
+                    "Estados de Paquetes"
+                ],
+                "summary": "Mostrar un estado de paquete",
+                "description": "Devuelve la información de un estado de paquete específico.",
+                "operationId": "c2b4f73d05f99c03de42decba21cb76d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del estado de paquete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Estado de paquete encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EstadoPaquete"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Estado no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Estado no encontrado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Estados de Paquetes"
+                ],
+                "summary": "Actualizar un estado de paquete",
+                "operationId": "e90f3cf6bd3dacaff841e36c47ca8665",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del estado de paquete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "estado": {
+                                        "type": "string",
+                                        "example": "Entregado"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Estado de paquete actualizado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EstadoPaquete"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Estados de Paquetes"
+                ],
+                "summary": "Eliminar un estado de paquete",
+                "operationId": "dda4f182f79a37411aba98bd0b995a1a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del estado de paquete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Estado eliminado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Estado eliminado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "No se puede eliminar el estado por integridad referencial",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No se puede eliminar el estado: existen registros relacionados."
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "SQLSTATE[23000]: Integrity constraint violation ..."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/paquetes": {
+            "get": {
+                "tags": [
+                    "Paquetes"
+                ],
+                "summary": "Listar paquetes",
+                "description": "Obtiene un listado paginado de paquetes con sus relaciones (camionero y estado).",
+                "operationId": "4d0a32f7c18e34437a02ce5fb5637f77",
+                "responses": {
+                    "200": {
+                        "description": "Lista de paquetes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Paquete"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Paquetes"
+                ],
+                "summary": "Crear un nuevo paquete",
+                "operationId": "6e07c3b13a83027c38bcd408805953ad",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "descripcion",
+                                    "peso",
+                                    "camionero_id",
+                                    "estado_id"
+                                ],
+                                "properties": {
+                                    "descripcion": {
+                                        "type": "string",
+                                        "example": "Electrodoméstico"
+                                    },
+                                    "peso": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 15.7
+                                    },
+                                    "camionero_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "estado_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Paquete creado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Paquete"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/paquetes/{id}": {
+            "get": {
+                "tags": [
+                    "Paquetes"
+                ],
+                "summary": "Mostrar un paquete",
+                "description": "Devuelve la información de un paquete específico con sus relaciones.",
+                "operationId": "e1274b5b3299ac71b0e1cc199bbd5dd9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del paquete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Paquete encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Paquete"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Paquete no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Paquete no encontrado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Paquetes"
+                ],
+                "summary": "Actualizar un paquete",
+                "operationId": "d89e18532d3d309a590aad9ad26eb046",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del paquete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "descripcion": {
+                                        "type": "string",
+                                        "example": "Muebles"
+                                    },
+                                    "peso": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 50.5
+                                    },
+                                    "camionero_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "estado_id": {
+                                        "type": "integer",
+                                        "example": 3
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Paquete actualizado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Paquete"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Paquetes"
+                ],
+                "summary": "Eliminar un paquete",
+                "operationId": "429560a97e6646adeb2da8cd1e1d35e3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del paquete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Paquete eliminado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Paquete eliminado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/tipos-mercancia": {
+            "get": {
+                "tags": [
+                    "Tipos de Mercancía"
+                ],
+                "summary": "Listar tipos de mercancía",
+                "description": "Obtiene un listado paginado de tipos de mercancía.",
+                "operationId": "42a8525408d6911cbf3c75cbf20b3485",
+                "responses": {
+                    "200": {
+                        "description": "Lista de tipos de mercancía",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TipoMercancia"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Tipos de Mercancía"
+                ],
+                "summary": "Crear un nuevo tipo de mercancía",
+                "operationId": "c208cb7d3ffee38a0aff9478074b9265",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre"
+                                ],
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Electrónica"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tipo de mercancía creado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TipoMercancia"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/tipos-mercancia/{id}": {
+            "get": {
+                "tags": [
+                    "Tipos de Mercancía"
+                ],
+                "summary": "Mostrar un tipo de mercancía",
+                "description": "Devuelve la información de un tipo de mercancía específico.",
+                "operationId": "74712f5f9663b327e091b33122c6d210",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del tipo de mercancía",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tipo de mercancía encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TipoMercancia"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Tipo de mercancía no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Tipo de mercancía no encontrado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Tipos de Mercancía"
+                ],
+                "summary": "Actualizar un tipo de mercancía",
+                "operationId": "8802bc6e2b662ea784868581f9bcde2f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del tipo de mercancía",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Alimentos"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tipo de mercancía actualizado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TipoMercancia"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Tipos de Mercancía"
+                ],
+                "summary": "Eliminar un tipo de mercancía",
+                "operationId": "94e54a6a0ec3c4da9b3a9e736b31a7c5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del tipo de mercancía",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tipo de mercancía eliminado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Tipo eliminado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Camion": {
+                "title": "Camion",
+                "description": "Información de un camión",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "placa": {
+                        "description": "Placa única del camión",
+                        "type": "string",
+                        "example": "ABC123"
+                    },
+                    "modelo": {
+                        "description": "Modelo del camión",
+                        "type": "string",
+                        "example": "Volvo FH16"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-01-01T12:00:00Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-01-01T12:00:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "Camionero": {
+                "title": "Camionero",
+                "description": "Información de un camionero",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "documento": {
+                        "description": "Documento de identificación del camionero",
+                        "type": "string",
+                        "example": "1029384756"
+                    },
+                    "nombre": {
+                        "description": "Nombre del camionero",
+                        "type": "string",
+                        "example": "Carlos"
+                    },
+                    "apellido": {
+                        "description": "Apellido del camionero",
+                        "type": "string",
+                        "example": "Pérez"
+                    },
+                    "fecha_nacimiento": {
+                        "description": "Fecha de nacimiento del camionero",
+                        "type": "string",
+                        "format": "date",
+                        "example": "1985-06-20"
+                    },
+                    "licencia": {
+                        "description": "Número de licencia de conducción",
+                        "type": "string",
+                        "example": "LIC123456"
+                    },
+                    "telefono": {
+                        "description": "Número de teléfono del camionero",
+                        "type": "string",
+                        "example": "+57 3001234567"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-01-01T12:00:00Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-01-01T12:00:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "DetallePaquete": {
+                "title": "DetallePaquete",
+                "description": "Detalles específicos de un paquete",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "paquete_id": {
+                        "description": "ID del paquete asociado",
+                        "type": "integer",
+                        "example": 10
+                    },
+                    "tipo_mercancia_id": {
+                        "description": "ID del tipo de mercancía",
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "dimension": {
+                        "description": "Dimensiones del paquete (largo x ancho x alto)",
+                        "type": "string",
+                        "example": "40x30x20 cm"
+                    },
+                    "peso": {
+                        "description": "Peso del paquete en kilogramos",
+                        "type": "number",
+                        "format": "float",
+                        "example": 12.5
+                    },
+                    "fecha_entrega": {
+                        "description": "Fecha estimada de entrega del paquete",
+                        "type": "string",
+                        "format": "date",
+                        "example": "2025-10-15"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-01-01T12:00:00Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-01-01T12:00:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "EstadoPaquete": {
+                "title": "EstadoPaquete",
+                "description": "Estados posibles de un paquete",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "estado": {
+                        "description": "Nombre del estado del paquete",
+                        "type": "string",
+                        "example": "En tránsito"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-01-01T12:00:00Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-01-01T12:00:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "Paquete": {
+                "title": "Paquete",
+                "description": "Información de un paquete asignado a un camionero",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "camionero_id": {
+                        "description": "ID del camionero responsable del paquete",
+                        "type": "integer",
+                        "example": 3
+                    },
+                    "estado_id": {
+                        "description": "ID del estado actual del paquete",
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "direccion": {
+                        "description": "Dirección de entrega del paquete",
+                        "type": "string",
+                        "example": "Cra 45 #10-20, Bogotá"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-01-01T12:00:00Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-01-01T12:00:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "TipoMercancia": {
+                "title": "TipoMercancia",
+                "description": "Catálogo de tipos de mercancías disponibles para los paquetes",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "tipo": {
+                        "description": "Nombre o categoría del tipo de mercancía",
+                        "type": "string",
+                        "example": "Electrodomésticos"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-01-01T12:00:00Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-01-01T12:00:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "required": [
+                    "id",
+                    "name",
+                    "email"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Juan Pérez"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "juan@example.com"
+                    },
+                    "email_verified_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-09-01T10:15:30.000000Z",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-09-01T10:15:30.000000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-09-01T12:45:10.000000Z"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
+        {
+            "name": "Camiones",
+            "description": "Camiones"
+        },
+        {
+            "name": "Camioneros",
+            "description": "Camioneros"
+        },
+        {
+            "name": "Detalles de Paquetes",
+            "description": "Detalles de Paquetes"
+        },
+        {
+            "name": "Estados de Paquetes",
+            "description": "Estados de Paquetes"
+        },
+        {
+            "name": "Paquetes",
+            "description": "Paquetes"
+        },
+        {
+            "name": "Tipos de Mercancía",
+            "description": "Tipos de Mercancía"
+        }
+    ]
+}

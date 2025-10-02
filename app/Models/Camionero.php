@@ -7,6 +7,70 @@ use Illuminate\Database\Eloquent\Model;
 
 class Camionero extends Model
 {
+    /**
+ * @OA\Schema(
+ *   schema="Camionero",
+ *   type="object",
+ *   title="Camionero",
+ *   description="Información de un camionero",
+ *   @OA\Property(
+ *     property="id",
+ *     type="integer",
+ *     format="int64",
+ *     example=1
+ *   ),
+ *   @OA\Property(
+ *     property="documento",
+ *     type="string",
+ *     description="Documento de identificación del camionero",
+ *     example="1029384756"
+ *   ),
+ *   @OA\Property(
+ *     property="nombre",
+ *     type="string",
+ *     description="Nombre del camionero",
+ *     example="Carlos"
+ *   ),
+ *   @OA\Property(
+ *     property="apellido",
+ *     type="string",
+ *     description="Apellido del camionero",
+ *     example="Pérez"
+ *   ),
+ *   @OA\Property(
+ *     property="fecha_nacimiento",
+ *     type="string",
+ *     format="date",
+ *     description="Fecha de nacimiento del camionero",
+ *     example="1985-06-20"
+ *   ),
+ *   @OA\Property(
+ *     property="licencia",
+ *     type="string",
+ *     description="Número de licencia de conducción",
+ *     example="LIC123456"
+ *   ),
+ *   @OA\Property(
+ *     property="telefono",
+ *     type="string",
+ *     description="Número de teléfono del camionero",
+ *     example="+57 3001234567"
+ *   ),
+ *   @OA\Property(
+ *     property="created_at",
+ *     type="string",
+ *     format="date-time",
+ *     example="2025-01-01T12:00:00Z"
+ *   ),
+ *   @OA\Property(
+ *     property="updated_at",
+ *     type="string",
+ *     format="date-time",
+ *     example="2025-01-01T12:00:00Z"
+ *   )
+ * )
+ */
+
     use HasFactory;
 
     protected $fillable = [
@@ -29,23 +93,7 @@ public function camiones()
     {
         return $this->hasMany(Paquete::class);
     }
-    /**
- * @OA\Schema(
- *     schema="Camionero",
- *     type="object",
- *     title="Camionero",
- *     required={"nombre","apellido","documento","telefono","fecha_nacimiento","licencia"},
- *     @OA\Property(property="id", type="integer", example=1),
- *     @OA\Property(property="nombre", type="string", example="Juan"),
- *     @OA\Property(property="apellido", type="string", example="Perez"),
- *     @OA\Property(property="documento", type="string", example="12345678"),
- *     @OA\Property(property="telefono", type="string", example="3001234567"),
- *     @OA\Property(property="fecha_nacimiento", type="string", format="date", example="1990-01-01"),
- *     @OA\Property(property="licencia", type="string", example="A1234567"),
- *     @OA\Property(property="created_at", type="string", format="date-time"),
- *     @OA\Property(property="updated_at", type="string", format="date-time")
- * )
- */
+
 }
 
 

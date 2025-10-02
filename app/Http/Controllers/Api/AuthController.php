@@ -10,6 +10,32 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+        /**
+ * @OA\Post(
+ *   path="/api/register",
+ *   tags={"Auth"},
+ *   summary="Registrar un nuevo usuario",
+ *   @OA\RequestBody(
+ *     required=true,
+ *     @OA\JsonContent(
+ *       required={"name","email","password"},
+ *       @OA\Property(property="name", type="string", example="Juan Pérez"),
+ *       @OA\Property(property="email", type="string", format="email", example="juan@example.com"),
+ *       @OA\Property(property="password", type="string", format="password", example="12345678")
+ *     )
+ *   ),
+ *   @OA\Response(
+ *     response=201,
+ *     description="Usuario registrado correctamente",
+ *     @OA\JsonContent(
+ *       @OA\Property(property="user", ref="#/components/schemas/User"),
+ *       @OA\Property(property="token", type="string", example="1|xyz123token"),
+ *       @OA\Property(property="token_type", type="string", example="Bearer")
+ *     )
+ *   ),
+ *   @OA\Response(response=422, description="Error de validación")
+ * )
+ */
     // Registro
     public function register(Request $request)
     {
@@ -34,6 +60,31 @@ class AuthController extends Controller
         ]);
     }
 
+/**
+ * @OA\Post(
+ *   path="/api/login",
+ *   tags={"Auth"},
+ *   summary="Iniciar sesión de usuario",
+ *   @OA\RequestBody(
+ *     required=true,
+ *     @OA\JsonContent(
+ *       required={"email","password"},
+ *       @OA\Property(property="email", type="string", format="email", example="juan@example.com"),
+ *       @OA\Property(property="password", type="string", format="password", example="12345678")
+ *     )
+ *   ),
+ *   @OA\Response(
+ *     response=200,
+ *     description="Login exitoso",
+ *     @OA\JsonContent(
+ *       @OA\Property(property="user", ref="#/components/schemas/User"),
+ *       @OA\Property(property="token", type="string", example="1|xyz123token"),
+ *       @OA\Property(property="token_type", type="string", example="Bearer")
+ *     )
+ *   ),
+ *   @OA\Response(response=401, description="Credenciales inválidas")
+ * )
+ */
     // Login
     public function login(Request $request)
     {
@@ -58,6 +109,22 @@ class AuthController extends Controller
             'token_type' => 'Bearer',
         ]);
     }
+/**
+ * @OA\Post(
+ *   path="/api/logout",
+ *   security={{"sanctum":{}}},
+ *   tags={"Auth"},
+ *   summary="Cerrar sesión del usuario autenticado",
+ *   @OA\Response(
+ *     response=200,
+ *     description="Sesión cerrada correctamente",
+ *     @OA\JsonContent(
+ *       @OA\Property(property="message", type="string", example="Sesión cerrada correctamente")
+ *     )
+ *   ),
+ *   @OA\Response(response=401, description="Usuario no autenticado")
+ * )
+ */
 
     // Logout
     public function logout(Request $request)
@@ -74,6 +141,22 @@ class AuthController extends Controller
         'message' => 'Sesión cerrada correctamente'
     ]);
 }
+/**
+ * @OA\Get(
+ *   path="/api/me",
+ *   security={{"sanctum":{}}},
+ *   tags={"Auth"},
+ *   summary="Obtener el perfil del usuario autenticado",
+ *   @OA\Response(
+ *     response=200,
+ *     description="Perfil del usuario",
+ *     @OA\JsonContent(
+ *       @OA\Property(property="user", ref="#/components/schemas/User")
+ *     )
+ *   ),
+ *   @OA\Response(response=401, description="Usuario no autenticado")
+ * )
+ */
 
     // Perfil del usuario autenticado
     public function me(Request $request)
@@ -82,4 +165,5 @@ class AuthController extends Controller
             'user' => $request->user()
         ]);
     }
+
 }
