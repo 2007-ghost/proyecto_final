@@ -9,6 +9,32 @@ use App\Http\Controllers\Api\DetallePaqueteController;
 use App\Http\Controllers\Api\EstadoPaqueteController;
 use App\Http\Controllers\Api\TipoMercanciaController;
 
+
+Route::get('/', function () {
+    return response()->json([
+        'application' => 'Transporte API',
+        'version' => '1.0.0',
+        'status' => 'Running OK',
+        'documentation' => url('/api/documentation'),
+        'resources' => [
+            'Camioneros' => url('/api/camioneros'),
+            'Camiones' => url('/api/camiones'),
+            'Detalles de Paquetes' => url('/api/detalles-paquetes'),
+            'Estados' => url('/api/estados'),
+            'Paquetes' => url('/api/paquetes'),
+            'Tipo de Mercancía' => url('/api/tipo-mercancia'),
+            'register' => url('/api/register'),
+            'login' => url('/api/login'),
+            'me' => url('/api/me'),
+            'logout' => url('/api/logout'),
+        ],
+        'developer' => [
+            'name' => 'Kevin Quintero',
+            'email' => 'kevin.stiven.quintero.yepes@gmail.com',
+        ],
+    ]);
+});
+
 // 👤 Rutas públicas (sin token)
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
